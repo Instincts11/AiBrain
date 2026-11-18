@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { PanelLeftClose, PanelLeft } from "lucide-react";
+import { PanelLeftClose, PanelLeft, Infinity as InfinityIcon } from "lucide-react";
 import { NAV_ITEMS } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import { useUiStore } from "@/stores/ui-store";
-import { AgentChips } from "./agent-chips";
 import { Button } from "@/components/ui/button";
+import { ChatDock } from "./chat-dock";
 
 export function CommandShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -21,45 +21,50 @@ export function CommandShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex h-dvh flex-col overflow-hidden dm-grid-bg">
-      <header className="z-30 flex h-12 shrink-0 items-center justify-between border-b border-border bg-midnight/90 px-3 backdrop-blur-md md:px-4">
-        <div className="flex items-center gap-3">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="hidden md:inline-flex"
-            onClick={toggleRail}
-            aria-label={railCollapsed ? "Expand navigation" : "Collapse navigation"}
-          >
-            {railCollapsed ? (
-              <PanelLeft className="h-4 w-4" />
-            ) : (
-              <PanelLeftClose className="h-4 w-4" />
-            )}
-          </Button>
-          <Link href="/" className="group flex items-baseline gap-2">
-            <span className="text-sm font-semibold tracking-[0.18em] text-ink">
-              DUALMIND
-            </span>
-            <span className="hidden text-[10px] uppercase tracking-widest text-ink-dim sm:inline">
-              Command
-            </span>
-          </Link>
-        </div>
-        <AgentChips />
-        <div className="hidden items-center gap-3 font-mono text-[10px] text-ink-dim lg:flex">
-          <span>GRAPH · SAMPLE</span>
-          <span className="h-1 w-1 rounded-full bg-emerald" />
-          <span>OFFLINE READY</span>
-        </div>
-      </header>
-
       <div className="flex min-h-0 flex-1">
         <aside
           className={cn(
-            "hidden shrink-0 flex-col border-r border-border bg-midnight/60 transition-[width] duration-300 md:flex",
-            railCollapsed ? "w-16" : "w-56",
+            "hidden shrink-0 flex-col border-r border-border bg-[#070b14]/95 transition-[width] duration-300 md:flex",
+            railCollapsed ? "w-[68px]" : "w-[220px]",
           )}
         >
+          <div
+            className={cn(
+              "flex h-14 shrink-0 items-center gap-2 border-b border-border px-3",
+              railCollapsed && "justify-center px-0",
+            )}
+          >
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan/30 to-violet/40 text-cyan">
+              <InfinityIcon className="h-4 w-4" />
+            </div>
+            {!railCollapsed && (
+              <Link href="/" className="text-sm font-semibold tracking-[0.16em] text-ink">
+                DUALMIND
+              </Link>
+            )}
+          </div>
+
+          <div className="flex items-center justify-end border-b border-border px-2 py-1.5 md:hidden" />
+          <div
+            className={cn(
+              "hidden items-center border-b border-border px-2 py-1.5 md:flex",
+              railCollapsed ? "justify-center" : "justify-end",
+            )}
+          >
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleRail}
+              aria-label={railCollapsed ? "Expand navigation" : "Collapse navigation"}
+            >
+              {railCollapsed ? (
+                <PanelLeft className="h-4 w-4" />
+              ) : (
+                <PanelLeftClose className="h-4 w-4" />
+              )}
+            </Button>
+          </div>
+
           <nav className="flex flex-1 flex-col gap-1 p-2">
             {NAV_ITEMS.map((item) => {
               const active =
@@ -70,7 +75,7 @@ export function CommandShell({ children }: { children: React.ReactNode }) {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    "relative flex items-center gap-3 rounded-md px-3 py-2.5 text-sm transition-colors",
+                    "relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors",
                     active
                       ? "text-ink"
                       : "text-ink-muted hover:bg-white/[0.03] hover:text-ink",
@@ -81,7 +86,7 @@ export function CommandShell({ children }: { children: React.ReactNode }) {
                   {active && (
                     <motion.span
                       layoutId="nav-active"
-                      className="absolute inset-0 rounded-md bg-cyan-dim border border-cyan/20"
+                      className="absolute inset-0 rounded-xl border border-cyan/25 bg-gradient-to-r from-cyan/15 via-violet/20 to-violet/10"
                       transition={{ type: "spring", stiffness: 380, damping: 32 }}
                     />
                   )}
@@ -98,18 +103,39 @@ export function CommandShell({ children }: { children: React.ReactNode }) {
               );
             })}
           </nav>
+
           {!railCollapsed && (
-            <p className="border-t border-border px-4 py-3 text-[10px] leading-relaxed text-ink-dim">
-              Explore the connections. Challenge the thinking. Discover the
-              direction.
-            </p>
+            <div className="space-y-3 border-t border-border p-3">
+              <div>
+                <div className="mb-1.5 text-[10px] uppercase tracking-wider text-ink-dim">
+                  Current Workspace
+                </div>
+                <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-ink">
+                  AI SaaS Product
+                </div>
+              </div>
+              <div>
+                <div className="mb-1.5 flex items-center justify-between text-[10px] uppercase tracking-wider text-ink-dim">
+                  <span>Knowledge Usage</span>
+                  <span className="text-cyan">68%</span>
+                </div>
+                <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
+                  <div className="h-full w-[68%] rounded-full bg-gradient-to-r from-cyan to-violet" />
+                </div>
+                <p className="mt-1.5 font-mono text-[10px] text-ink-dim">
+                  1,248 nodes · 4,320 connections
+                </p>
+              </div>
+            </div>
           )}
         </aside>
 
-        <main className="relative min-w-0 flex-1 overflow-hidden">{children}</main>
+        <main className="relative min-w-0 flex-1 overflow-hidden pb-[140px] md:pb-[88px]">
+          {children}
+        </main>
       </div>
 
-      <nav className="z-30 flex shrink-0 items-stretch justify-around border-t border-border bg-midnight/95 backdrop-blur-md md:hidden">
+      <nav className="z-50 flex shrink-0 items-stretch justify-around border-t border-border bg-midnight/95 backdrop-blur-md md:hidden">
         {NAV_ITEMS.map((item) => {
           const active =
             pathname === item.href || pathname.startsWith(`${item.href}/`);
@@ -129,6 +155,8 @@ export function CommandShell({ children }: { children: React.ReactNode }) {
           );
         })}
       </nav>
+
+      <ChatDock />
     </div>
   );
 }
