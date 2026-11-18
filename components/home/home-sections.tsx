@@ -2,14 +2,19 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+} from "framer-motion";
 import {
   Network,
   Split,
   ScanSearch,
   Blend,
   Crosshair,
-  Check,
   Zap,
   ShieldCheck,
   BarChart3,
@@ -30,12 +35,28 @@ function DarkSection({
   children: React.ReactNode;
   className?: string;
 }) {
+  const ref = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const glowY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reduceMotion ? ["0%", "0%"] : ["-12%", "12%"],
+  );
+
   return (
     <section
+      ref={ref}
       id={id}
       className={`relative overflow-hidden bg-[#05070f] ${className}`}
     >
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_20%_20%,rgba(34,211,238,0.06),transparent_55%),radial-gradient(ellipse_50%_40%_at_80%_80%,rgba(139,92,246,0.07),transparent_50%)]" />
+      <motion.div
+        style={{ y: glowY }}
+        className="pointer-events-none absolute inset-[-20%] bg-[radial-gradient(ellipse_60%_50%_at_20%_20%,rgba(34,211,238,0.07),transparent_55%),radial-gradient(ellipse_50%_40%_at_80%_80%,rgba(139,92,246,0.08),transparent_50%)]"
+      />
       <div className="relative">{children}</div>
     </section>
   );
@@ -199,7 +220,10 @@ export function UseCases() {
         </h2>
         <p className="mx-auto mt-3 max-w-3xl text-center text-base text-ink-muted md:text-lg">
           From startups to research, turn uncertainty into clear,
-          evidence-backed action.
+          evidence-backed action.{" "}
+          <Link href="/use-cases" className="text-cyan hover:underline">
+            Explore all use cases
+          </Link>
         </p>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:gap-6">
@@ -207,14 +231,14 @@ export function UseCases() {
             <Link
               key={c.title}
               href={c.href}
-              className="group overflow-hidden rounded-2xl border border-white/10 bg-[#0a101c] transition-colors hover:border-cyan/35"
+              className="overflow-hidden rounded-2xl border border-white/10 bg-[#0a101c]"
             >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
                   src={c.image}
                   alt=""
                   fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="object-cover"
                   sizes="(max-width: 1024px) 50vw, 25vw"
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a101c] via-[#0a101c]/20 to-transparent" />
@@ -241,9 +265,32 @@ export function KnowledgeUniverse() {
     { icon: Layers, label: "Execution Roadmap", color: "text-fuchsia-300" },
   ];
 
+  const ref = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const bgY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reduceMotion ? ["0%", "0%"] : ["-18%", "18%"],
+  );
+  const contentY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    reduceMotion ? ["0%", "0%"] : ["6%", "-6%"],
+  );
+
   return (
-    <section className="relative overflow-hidden bg-[#050a14] py-16 md:py-24">
-      <div className="pointer-events-none absolute inset-0">
+    <section
+      ref={ref}
+      className="relative overflow-hidden bg-[#050a14] py-16 md:py-24"
+    >
+      <motion.div
+        style={{ y: bgY }}
+        className="pointer-events-none absolute inset-[-25%]"
+      >
         <Image
           src="/home/bg-universe-vibrant.jpg"
           alt=""
@@ -252,9 +299,12 @@ export function KnowledgeUniverse() {
           sizes="100vw"
         />
         <div className="absolute inset-0 bg-[#050a14]/20" />
-      </div>
+      </motion.div>
 
-      <div className="relative mx-auto w-full max-w-[1680px] px-4 sm:px-6 md:pl-20 md:pr-8 lg:px-8 xl:px-10">
+      <motion.div
+        style={{ y: contentY }}
+        className="relative mx-auto w-full max-w-[1680px] px-4 sm:px-6 md:pl-20 md:pr-8 lg:px-8 xl:px-10"
+      >
         <div className="mx-auto max-w-3xl py-6 text-center lg:mx-0 lg:max-w-2xl lg:pl-10 lg:text-left xl:pl-16">
           <p className="font-mono text-[13px] uppercase tracking-[0.28em] text-ink md:text-sm">
             The AI Decision Intelligence Platform
@@ -300,7 +350,7 @@ export function KnowledgeUniverse() {
             </a>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
@@ -400,7 +450,7 @@ export function DiscoverShowcase() {
                 <Link
                   key={item.title}
                   href={item.href}
-                  className={`group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0a101c]/80 transition-all hover:-translate-y-0.5 hover:border-cyan/35 hover:shadow-[0_0_28px_rgba(34,211,238,0.15)] ${
+                  className={`flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0a101c]/80 ${
                     item.fill ? "min-h-0 flex-1" : "shrink-0"
                   }`}
                 >
@@ -417,7 +467,7 @@ export function DiscoverShowcase() {
                       src={item.image}
                       alt=""
                       fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      className="object-cover"
                       sizes="(max-width: 1024px) 50vw, 33vw"
                     />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#05070f] via-transparent to-transparent opacity-80" />

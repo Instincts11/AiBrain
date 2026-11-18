@@ -110,7 +110,7 @@ export function SynthesisView() {
               <AgentAvatar agent="jarvis" size="lg" />
               <div>
                 <div className="text-sm font-medium text-ink">JARVIS</div>
-                <div className="text-[11px] text-ink-dim">
+                <div className="text-sm text-ink-dim">
                   Constructive Analysis
                 </div>
               </div>
@@ -119,7 +119,7 @@ export function SynthesisView() {
               <div className="flex h-28 w-28 items-center justify-center rounded-full border border-cyan/30 bg-gradient-to-br from-cyan/25 via-violet/30 to-violet/15 shadow-[0_0_44px_rgba(34,211,238,0.22)]">
                 <InfinityIcon className="h-10 w-10 text-ink" />
               </div>
-              <div className="mt-2 text-[10px] uppercase tracking-wider text-cyan">
+              <div className="mt-2 text-xs uppercase tracking-wider text-cyan">
                 Independent Evaluation
               </div>
             </div>
@@ -127,7 +127,7 @@ export function SynthesisView() {
               <AgentAvatar agent="ultron" size="lg" />
               <div>
                 <div className="text-sm font-medium text-ink">ULTRON</div>
-                <div className="text-[11px] text-ink-dim">Critical Analysis</div>
+                <div className="text-sm text-ink-dim">Critical Analysis</div>
               </div>
             </div>
           </div>
@@ -176,14 +176,14 @@ export function SynthesisView() {
                   key={m.label}
                   className="rounded-xl border border-white/10 bg-black/20 px-3 py-3"
                 >
-                  <div className="text-[10px] uppercase tracking-wider text-ink-dim">
+                  <div className="text-xs uppercase tracking-wider text-ink-dim">
                     {m.label}
                   </div>
                   <div className="mt-1 flex items-baseline gap-2">
                     <span className="text-lg font-semibold text-ink">
                       {m.value}
                     </span>
-                    <span className="text-[10px] text-cyan">{m.hint}</span>
+                    <span className="text-xs text-cyan">{m.hint}</span>
                   </div>
                 </div>
               ))}
@@ -192,7 +192,7 @@ export function SynthesisView() {
 
           <div className="grid gap-3 md:grid-cols-2">
             <div className="rounded-2xl border border-emerald/25 bg-emerald/[0.06] p-4">
-              <div className="mb-2 text-[11px] uppercase tracking-wider text-emerald">
+              <div className="mb-2 text-sm uppercase tracking-wider text-emerald">
                 Key Agreement Areas
               </div>
               <ul className="space-y-2 text-xs text-ink-muted">
@@ -209,7 +209,7 @@ export function SynthesisView() {
               </ul>
             </div>
             <div className="rounded-2xl border border-violet/25 bg-violet/[0.06] p-4">
-              <div className="mb-2 text-[11px] uppercase tracking-wider text-violet">
+              <div className="mb-2 text-sm uppercase tracking-wider text-violet">
                 Key Disagreement Areas
               </div>
               <ul className="space-y-2 text-xs text-ink-muted">
@@ -228,12 +228,12 @@ export function SynthesisView() {
           </div>
 
           <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-            <div className="mb-3 text-[11px] uppercase tracking-wider text-ink-dim">
+            <div className="mb-3 text-sm uppercase tracking-wider text-ink-dim">
               Trade-off Analysis
             </div>
             <div className="overflow-x-auto">
               <table className="w-full min-w-[480px] text-left text-xs">
-                <thead className="text-[10px] uppercase tracking-wider text-ink-dim">
+                <thead className="text-xs uppercase tracking-wider text-ink-dim">
                   <tr className="border-b border-white/10">
                     <th className="pb-2 pr-3 font-medium">Factor</th>
                     <th className="pb-2 pr-3 font-medium text-cyan">
@@ -256,7 +256,7 @@ export function SynthesisView() {
               </table>
             </div>
             <div className="mt-4">
-              <div className="mb-2 text-[11px] uppercase tracking-wider text-ink-dim">
+              <div className="mb-2 text-sm uppercase tracking-wider text-ink-dim">
                 Evidence Foundation
               </div>
               <div className="flex flex-wrap gap-2">
@@ -268,7 +268,7 @@ export function SynthesisView() {
                 ].map((f) => (
                   <span
                     key={f}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 px-2 py-1 text-[11px] text-ink-muted"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 px-2 py-1 text-sm text-ink-muted"
                   >
                     <FileText className="h-3 w-3 text-cyan" />
                     {f}
@@ -283,7 +283,7 @@ export function SynthesisView() {
         <aside className="flex flex-col gap-3">
           <div className="rounded-2xl border border-cyan/25 bg-gradient-to-br from-cyan/10 via-violet/10 to-transparent p-4">
             <div className="mb-2 flex items-center justify-between">
-              <div className="text-[11px] uppercase tracking-wider text-ink-dim">
+              <div className="text-sm uppercase tracking-wider text-ink-dim">
                 Final Recommendation
               </div>
               <Badge variant="cyan">0.86</Badge>
@@ -350,7 +350,7 @@ export function SynthesisView() {
             </ul>
           </Panel>
 
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-[11px] text-ink-dim">
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-ink-dim">
             <TrendingUp className="mr-1.5 inline h-3.5 w-3.5 text-cyan" />
             Synthesis confidence trending upward
           </div>
@@ -369,7 +369,7 @@ function Panel({
 }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-3.5">
-      <div className="mb-2.5 text-[11px] uppercase tracking-wider text-ink-dim">
+      <div className="mb-2.5 text-sm uppercase tracking-wider text-ink-dim">
         {title}
       </div>
       {children}
@@ -411,7 +411,7 @@ function Gauge({ label, value }: { label: string; value: number }) {
         </defs>
       </svg>
       <div className="-mt-11 text-sm font-semibold text-ink">{value}%</div>
-      <div className="mt-6 text-[10px] text-ink-dim">{label}</div>
+      <div className="mt-6 text-xs text-ink-dim">{label}</div>
     </div>
   );
 }

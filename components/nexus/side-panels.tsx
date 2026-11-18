@@ -10,7 +10,7 @@ export function StatsPanel() {
   const { stats } = analyzed;
   return (
     <div className="dm-panel p-3">
-      <h2 className="mb-2 text-[11px] font-medium uppercase tracking-wider text-ink-dim">
+      <h2 className="mb-2 text-sm font-medium uppercase tracking-wider text-ink-dim">
         Graph statistics
       </h2>
       <div className="grid grid-cols-2 gap-2 font-mono text-xs">
@@ -29,10 +29,10 @@ export function InfluentialPanel() {
   const selectNode = useNexusStore((s) => s.selectNode);
   return (
     <div className="dm-panel p-3">
-      <h2 className="mb-2 text-[11px] font-medium uppercase tracking-wider text-ink-dim">
+      <h2 className="mb-2 text-sm font-medium uppercase tracking-wider text-ink-dim">
         Influential concepts
       </h2>
-      <p className="mb-2 text-[11px] text-ink-dim">Ranked by PageRank</p>
+      <p className="mb-2 text-sm text-ink-dim">Ranked by PageRank</p>
       <ul className="space-y-1.5">
         {influential.map((n, i) => (
           <li key={n.id}>
@@ -42,12 +42,12 @@ export function InfluentialPanel() {
               className="flex w-full items-center justify-between gap-2 rounded-sm px-1 py-1 text-left text-sm hover:bg-white/5"
             >
               <span className="truncate text-ink-muted">
-                <span className="mr-2 font-mono text-[10px] text-ink-dim">
+                <span className="mr-2 font-mono text-xs text-ink-dim">
                   {i + 1}
                 </span>
                 {n.label}
               </span>
-              <span className="shrink-0 font-mono text-[10px] text-cyan">
+              <span className="shrink-0 font-mono text-xs text-cyan">
                 {n.pagerank.toFixed(3)}
               </span>
             </button>
@@ -66,12 +66,12 @@ export function StructuralGapsPanel() {
   return (
     <div className="dm-panel dm-scrollbar max-h-[320px] overflow-auto p-3">
       <div className="mb-2 flex items-center gap-2">
-        <h2 className="text-[11px] font-medium uppercase tracking-wider text-ink-dim">
+        <h2 className="text-sm font-medium uppercase tracking-wider text-ink-dim">
           Structural gaps
         </h2>
         <Badge variant="violet">Hypothesis</Badge>
       </div>
-      <p className="mb-3 text-[11px] leading-relaxed text-ink-dim">
+      <p className="mb-3 text-sm leading-relaxed text-ink-dim">
         Weak inter-community bridges suggest investigation opportunities — not
         proof of conceptual similarity.
       </p>
@@ -106,7 +106,7 @@ export function StructuralGapsPanel() {
               <span className="text-ink-dim">Investigate: </span>
               {gap.suggestedQuestion}
             </p>
-            <div className="mt-2 grid gap-2 text-[11px] text-ink-dim sm:grid-cols-2">
+            <div className="mt-2 grid gap-2 text-sm text-ink-dim sm:grid-cols-2">
               <div>
                 <div className="mb-1 uppercase tracking-wider">Supporting</div>
                 <ul>
@@ -124,7 +124,7 @@ export function StructuralGapsPanel() {
                 </ul>
               </div>
             </div>
-            <p className="mt-2 font-mono text-[10px] text-violet">
+            <p className="mt-2 font-mono text-xs text-violet">
               Concepts: {gap.conceptsA.join(", ")} ↔ {gap.conceptsB.join(", ")}
             </p>
           </li>
@@ -142,7 +142,7 @@ export function StructuralGapsPanel() {
 function Stat({ label, value }: { label: string; value: string | number }) {
   return (
     <div className="rounded-md border border-border bg-midnight px-2 py-1.5">
-      <div className="text-[10px] uppercase tracking-wider text-ink-dim">
+      <div className="text-xs uppercase tracking-wider text-ink-dim">
         {label}
       </div>
       <div className="text-ink">{value}</div>

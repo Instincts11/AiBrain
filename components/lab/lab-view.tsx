@@ -65,7 +65,7 @@ export function LabView() {
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="hidden items-center gap-1.5 rounded-full border border-emerald/25 bg-emerald/10 px-2.5 py-1 text-[10px] uppercase tracking-wider text-emerald sm:inline-flex">
+          <span className="hidden items-center gap-1.5 rounded-full border border-emerald/25 bg-emerald/10 px-2.5 py-1 text-xs uppercase tracking-wider text-emerald sm:inline-flex">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald" />
             Auto Save
           </span>
@@ -110,7 +110,7 @@ export function LabView() {
               >
                 <span
                   className={cn(
-                    "flex h-5 w-5 items-center justify-center rounded-full text-[10px]",
+                    "flex h-5 w-5 items-center justify-center rounded-full text-xs",
                     active && "bg-cyan text-void",
                     done && "bg-emerald/20 text-emerald",
                     !done && !active && "bg-white/5",
@@ -133,7 +133,7 @@ export function LabView() {
           {/* Session header */}
           <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
             <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
-              <div className="text-[11px] uppercase tracking-wider text-ink-dim">
+              <div className="text-sm uppercase tracking-wider text-ink-dim">
                 Decision Session
               </div>
               <div className="flex gap-1.5">
@@ -184,10 +184,10 @@ export function LabView() {
               <div className="relative flex h-28 w-28 items-center justify-center rounded-full border border-cyan/30 bg-gradient-to-br from-cyan/20 via-violet/25 to-violet/10 shadow-[0_0_40px_rgba(34,211,238,0.2)]">
                 <InfinityIcon className="h-10 w-10 text-ink" />
               </div>
-              <div className="mt-2 text-center text-[10px] uppercase tracking-wider text-ink-dim">
+              <div className="mt-2 text-center text-xs uppercase tracking-wider text-ink-dim">
                 Dual Intelligence
               </div>
-              <p className="mt-1 max-w-[160px] text-center text-[11px] text-ink-muted">
+              <p className="mt-1 max-w-[160px] text-center text-sm text-ink-muted">
                 Both minds are analyzing the problem…
               </p>
             </div>
@@ -207,7 +207,7 @@ export function LabView() {
 
           {/* Input summary */}
           <div>
-            <div className="mb-2 text-[11px] uppercase tracking-wider text-ink-dim">
+            <div className="mb-2 text-sm uppercase tracking-wider text-ink-dim">
               Your Input
             </div>
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
@@ -233,7 +233,7 @@ export function LabView() {
                   key={c.title}
                   className="rounded-xl border border-white/10 bg-white/[0.03] p-3"
                 >
-                  <div className="mb-1.5 text-[11px] font-medium text-ink">
+                  <div className="mb-1.5 text-sm font-medium text-ink">
                     {c.title}
                   </div>
                   <p className="text-xs leading-relaxed text-ink-muted">
@@ -263,7 +263,7 @@ export function LabView() {
               />
               <div className="space-y-3">
                 <div>
-                  <div className="mb-1.5 text-[11px] uppercase tracking-wider text-ink-dim">
+                  <div className="mb-1.5 text-sm uppercase tracking-wider text-ink-dim">
                     Analysis Depth
                   </div>
                   <div className="flex rounded-xl border border-white/10 p-0.5">
@@ -285,7 +285,7 @@ export function LabView() {
                   </div>
                 </div>
                 <div>
-                  <div className="mb-1.5 text-[11px] uppercase tracking-wider text-ink-dim">
+                  <div className="mb-1.5 text-sm uppercase tracking-wider text-ink-dim">
                     Knowledge Scope
                   </div>
                   <div className="rounded-xl border border-white/10 px-3 py-2 text-xs text-ink">
@@ -362,7 +362,7 @@ export function LabView() {
             </ul>
             <button
               type="button"
-              className="mt-2 text-[11px] text-cyan hover:underline"
+              className="mt-2 text-sm text-cyan hover:underline"
             >
               View All
             </button>
@@ -370,13 +370,13 @@ export function LabView() {
 
           <Panel title="AI Mind Configuration">
             <label className="mb-2 block space-y-1">
-              <span className="text-[11px] text-ink-dim">JARVIS model</span>
+              <span className="text-sm text-ink-dim">JARVIS model</span>
               <div className="rounded-lg border border-cyan/25 bg-cyan/5 px-3 py-2 text-xs text-ink">
                 GPT-4o
               </div>
             </label>
             <label className="block space-y-1">
-              <span className="text-[11px] text-ink-dim">ULTRON model</span>
+              <span className="text-sm text-ink-dim">ULTRON model</span>
               <div className="rounded-lg border border-violet/25 bg-violet/5 px-3 py-2 text-xs text-ink">
                 Claude 3.7
               </div>
@@ -413,7 +413,7 @@ function Panel({
 }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-3.5">
-      <div className="mb-2.5 text-[11px] uppercase tracking-wider text-ink-dim">
+      <div className="mb-2.5 text-sm uppercase tracking-wider text-ink-dim">
         {title}
       </div>
       {children}
@@ -448,10 +448,10 @@ function AgentProgress({
         <AgentAvatar agent={agent} />
         <div>
           <div className="text-sm font-medium text-ink">{name}</div>
-          <div className="text-[11px] text-ink-dim">{role}</div>
+          <div className="text-sm text-ink-dim">{role}</div>
         </div>
       </div>
-      <div className="mb-1 flex justify-between text-[11px]">
+      <div className="mb-1 flex justify-between text-sm">
         <span className="text-ink-muted">Running Analysis…</span>
         <span className={accent === "cyan" ? "text-cyan" : "text-violet"}>
           {pct}%
@@ -506,7 +506,7 @@ function FocusGroup({
 }) {
   return (
     <div>
-      <div className="mb-1.5 text-[11px] uppercase tracking-wider text-ink-dim">
+      <div className="mb-1.5 text-sm uppercase tracking-wider text-ink-dim">
         {label}
       </div>
       <div className="flex flex-wrap gap-1.5">

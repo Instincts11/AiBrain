@@ -101,7 +101,7 @@ export function Nexus2D() {
                 <text
                   y={-r - 4}
                   textAnchor="middle"
-                  className="fill-ink text-[10px]"
+                  className="fill-ink text-xs"
                   fill="#e8eef7"
                   fontSize={10}
                 >

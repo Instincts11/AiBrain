@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   MessageSquare,
   Paperclip,
@@ -8,12 +9,17 @@ import {
   Upload,
   X,
   GitCompareArrows,
-  ChevronUp,
   ChevronDown,
+  BarChart3,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useUiStore } from "@/stores/ui-store";
 
 export function ChatDock() {
+  const pathname = usePathname();
+  const onVault = pathname === "/vault" || pathname.startsWith("/vault/");
+  const matrixStatsOpen = useUiStore((s) => s.matrixStatsOpen);
+  const toggleMatrixStats = useUiStore((s) => s.toggleMatrixStats);
   const [expanded, setExpanded] = useState(false);
   const [compareOpen, setCompareOpen] = useState(false);
   const [message, setMessage] = useState("");
@@ -59,7 +65,25 @@ export function ChatDock() {
 
   return (
     <div className="pointer-events-none fixed inset-x-0 bottom-14 z-40 flex justify-center px-3 pb-2 md:bottom-0 md:px-6 md:pb-4">
-      <div className="pointer-events-auto w-full max-w-3xl">
+      <div className="pointer-events-auto flex w-full max-w-3xl items-end gap-2">
+        {onVault && (
+          <button
+            type="button"
+            onClick={toggleMatrixStats}
+            className={cn(
+              "mb-0.5 flex h-[52px] shrink-0 items-center gap-2 rounded-2xl border px-3.5 text-xs font-medium backdrop-blur-xl transition-colors",
+              matrixStatsOpen
+                ? "border-amber-400/45 bg-amber-500/20 text-amber-50 shadow-[0_0_22px_rgba(245,158,11,0.28)]"
+                : "border-white/12 bg-[#0b1220]/92 text-stone-300 hover:border-amber-500/35 hover:text-amber-100",
+            )}
+            title="Toggle Memory Matrix stats panels"
+          >
+            <BarChart3 className="h-4 w-4" />
+            Stats
+          </button>
+        )}
+
+        <div className="min-w-0 flex-1">
         {expanded && (
           <div className="mb-2 overflow-hidden rounded-2xl border border-white/10 bg-[#0a101c]/95 shadow-[0_16px_48px_rgba(0,0,0,0.5)] backdrop-blur-xl">
             <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
@@ -97,7 +121,7 @@ export function ChatDock() {
         {compareOpen && (
           <div className="mb-2 rounded-2xl border border-white/10 bg-[#0a101c]/95 p-3 shadow-[0_12px_36px_rgba(0,0,0,0.45)] backdrop-blur-xl">
             <div className="mb-2 flex items-center justify-between">
-              <div className="flex items-center gap-2 text-[11px] uppercase tracking-wider text-ink-dim">
+              <div className="flex items-center gap-2 text-sm uppercase tracking-wider text-ink-dim">
                 <GitCompareArrows className="h-3.5 w-3.5 text-cyan" />
                 Compare two datasets
               </div>
@@ -213,6 +237,7 @@ export function ChatDock() {
             }
           }}
         />
+        </div>
       </div>
     </div>
   );

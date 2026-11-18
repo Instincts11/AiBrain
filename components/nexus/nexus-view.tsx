@@ -66,7 +66,7 @@ export function NexusView() {
             <h1 className="text-xl font-semibold tracking-tight text-ink md:text-2xl">
               The Nexus
             </h1>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald/30 bg-emerald/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-emerald">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald/30 bg-emerald/10 px-2 py-0.5 text-xs font-medium uppercase tracking-wider text-emerald">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald" />
               Live
             </span>
@@ -83,7 +83,7 @@ export function NexusView() {
               placeholder="Search your knowledge…"
               className="w-44 bg-transparent text-sm text-ink outline-none placeholder:text-ink-dim lg:w-56"
             />
-            <kbd className="rounded border border-white/10 px-1.5 py-0.5 font-mono text-[10px] text-ink-dim">
+            <kbd className="rounded border border-white/10 px-1.5 py-0.5 font-mono text-xs text-ink-dim">
               ⌘K
             </kbd>
           </div>
@@ -137,7 +137,7 @@ export function NexusView() {
             {/* Center tooltip mock */}
             <div className="pointer-events-none absolute left-1/2 top-[42%] z-10 -translate-x-1/2 rounded-xl border border-white/15 bg-black/75 px-4 py-3 text-center shadow-[0_0_30px_rgba(34,211,238,0.15)] backdrop-blur">
               <div className="text-sm font-medium text-ink">AI SaaS Product</div>
-              <div className="mt-1 space-y-0.5 font-mono text-[10px] text-ink-dim">
+              <div className="mt-1 space-y-0.5 font-mono text-xs text-ink-dim">
                 <div>214 related nodes</div>
                 <div>8 communities</div>
                 <div>12 key insights</div>
@@ -166,7 +166,7 @@ export function NexusView() {
             <Panel title="Communities">
               <div className="flex items-center gap-3">
                 <Donut segments={COMMUNITIES} />
-                <ul className="space-y-1 text-[11px] text-ink-muted">
+                <ul className="space-y-1 text-sm text-ink-muted">
                   {COMMUNITIES.map((c) => (
                     <li key={c.name} className="flex items-center gap-1.5">
                       <span
@@ -215,7 +215,7 @@ export function NexusView() {
 
         {/* Right intelligence column */}
         <aside className="flex flex-col gap-3">
-          <div className="text-[11px] uppercase tracking-wider text-ink-dim">
+          <div className="text-sm uppercase tracking-wider text-ink-dim">
             Dual Intelligence
           </div>
 
@@ -258,7 +258,7 @@ export function NexusView() {
             </Link>
           </div>
 
-          <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-[11px] text-ink-dim">
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-sm text-ink-dim">
             <TrendingUp className="mr-1.5 inline h-3.5 w-3.5 text-cyan" />
             Graph health · Sample workspace
           </div>
@@ -277,7 +277,7 @@ function Panel({
 }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-3.5">
-      <div className="mb-2.5 text-[11px] uppercase tracking-wider text-ink-dim">
+      <div className="mb-2.5 text-sm uppercase tracking-wider text-ink-dim">
         {title}
       </div>
       {children}
@@ -315,7 +315,7 @@ function AgentCard({
               Analysis Complete
             </Badge>
           </div>
-          <div className="truncate text-[11px] text-ink-dim">{role}</div>
+          <div className="truncate text-sm text-ink-dim">{role}</div>
         </div>
       </div>
       <ul className="space-y-1.5 text-xs text-ink-muted">
@@ -353,7 +353,7 @@ function Donut({
     >
       <div className="absolute inset-2.5 flex flex-col items-center justify-center rounded-full bg-[#0a101c] text-center">
         <span className="text-sm font-semibold text-ink">6</span>
-        <span className="text-[9px] uppercase tracking-wider text-ink-dim">
+        <span className="text-xs uppercase tracking-wider text-ink-dim">
           Clusters
         </span>
       </div>

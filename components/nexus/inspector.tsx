@@ -27,7 +27,7 @@ export function NexusInspector() {
           Select a node or relationship to inspect metrics, evidence, and
           provenance.
         </p>
-        <p className="mt-4 font-mono text-[11px] text-ink-dim">
+        <p className="mt-4 font-mono text-sm text-ink-dim">
           Node size encodes PageRank. Colors follow community or category.
         </p>
       </div>
@@ -48,7 +48,7 @@ export function NexusInspector() {
           </h2>
           <button
             type="button"
-            className="text-[11px] text-ink-dim hover:text-ink"
+            className="text-sm text-ink-dim hover:text-ink"
             onClick={() => selectEdge(null)}
           >
             Clear
@@ -77,7 +77,7 @@ export function NexusInspector() {
         {edge.evidenceExcerpt && (
           <>
             <Separator className="my-4" />
-            <h3 className="mb-2 text-[11px] uppercase tracking-wider text-ink-dim">
+            <h3 className="mb-2 text-sm uppercase tracking-wider text-ink-dim">
               Evidence excerpt
             </h3>
             <p className="text-sm leading-relaxed text-ink-muted">
@@ -107,7 +107,7 @@ export function NexusInspector() {
         </h2>
         <button
           type="button"
-          className="text-[11px] text-ink-dim hover:text-ink"
+          className="text-sm text-ink-dim hover:text-ink"
           onClick={() => selectNode(null)}
         >
           Clear
@@ -124,7 +124,7 @@ export function NexusInspector() {
         <p className="mt-3 text-sm text-ink-muted">{node.description}</p>
       )}
       <Separator className="my-4" />
-      <h3 className="mb-2 text-[11px] uppercase tracking-wider text-ink-dim">
+      <h3 className="mb-2 text-sm uppercase tracking-wider text-ink-dim">
         Graph metrics
       </h3>
       <div className="grid grid-cols-2 gap-2 font-mono text-xs">
@@ -133,13 +133,13 @@ export function NexusInspector() {
         <Metric label="Betweenness" value={node.betweenness.toFixed(4)} />
         <Metric label="Neighbors" value={String(neighbors.length)} />
       </div>
-      <p className="mt-2 text-[11px] text-ink-dim">
+      <p className="mt-2 text-sm text-ink-dim">
         Metrics computed with Graphology — not invented by an AI model.
       </p>
       {docs.length > 0 && (
         <>
           <Separator className="my-4" />
-          <h3 className="mb-2 text-[11px] uppercase tracking-wider text-ink-dim">
+          <h3 className="mb-2 text-sm uppercase tracking-wider text-ink-dim">
             Source documents
           </h3>
           <ul className="space-y-1 text-sm text-ink-muted">
@@ -150,7 +150,7 @@ export function NexusInspector() {
         </>
       )}
       <Separator className="my-4" />
-      <h3 className="mb-2 text-[11px] uppercase tracking-wider text-ink-dim">
+      <h3 className="mb-2 text-sm uppercase tracking-wider text-ink-dim">
         Connected concepts
       </h3>
       <ul className="space-y-1">
@@ -170,7 +170,7 @@ export function NexusInspector() {
         })}
       </ul>
       <Separator className="my-4" />
-      <h3 className="mb-2 text-[11px] uppercase tracking-wider text-ink-dim">
+      <h3 className="mb-2 text-sm uppercase tracking-wider text-ink-dim">
         Relationships
       </h3>
       <ul className="space-y-2">
@@ -196,7 +196,7 @@ export function NexusInspector() {
 function Row({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="text-[11px] uppercase tracking-wider text-ink-dim">
+      <dt className="text-sm uppercase tracking-wider text-ink-dim">
         {label}
       </dt>
       <dd className="text-ink-muted">{value}</dd>
@@ -207,7 +207,7 @@ function Row({ label, value }: { label: string; value: string }) {
 function Metric({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-md border border-border bg-midnight px-2 py-2">
-      <div className="text-[10px] uppercase tracking-wider text-ink-dim">
+      <div className="text-xs uppercase tracking-wider text-ink-dim">
         {label}
       </div>
       <div className="mt-1 text-ink">{value}</div>

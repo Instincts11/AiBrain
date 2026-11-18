@@ -13,14 +13,17 @@ import { ChatDock } from "./chat-dock";
 export function CommandShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { railCollapsed, toggleRail } = useUiStore();
-  const isHome = pathname === "/";
+  const isMarketing =
+    pathname === "/" ||
+    pathname === "/use-cases" ||
+    pathname.startsWith("/use-cases/");
 
-  if (isHome) {
+  if (isMarketing) {
     return <>{children}</>;
   }
 
   return (
-    <div className="flex h-dvh flex-col overflow-hidden dm-grid-bg">
+    <div className="app-chrome flex h-dvh flex-col overflow-hidden dm-grid-bg">
       <div className="flex min-h-0 flex-1">
         <aside
           className={cn(
@@ -107,7 +110,7 @@ export function CommandShell({ children }: { children: React.ReactNode }) {
           {!railCollapsed && (
             <div className="space-y-3 border-t border-border p-3">
               <div>
-                <div className="mb-1.5 text-[10px] uppercase tracking-wider text-ink-dim">
+                <div className="mb-1.5 text-xs uppercase tracking-wider text-ink-dim">
                   Current Workspace
                 </div>
                 <div className="rounded-xl border border-white/10 bg-white/[0.03] px-3 py-2 text-xs text-ink">
@@ -115,14 +118,14 @@ export function CommandShell({ children }: { children: React.ReactNode }) {
                 </div>
               </div>
               <div>
-                <div className="mb-1.5 flex items-center justify-between text-[10px] uppercase tracking-wider text-ink-dim">
+                <div className="mb-1.5 flex items-center justify-between text-xs uppercase tracking-wider text-ink-dim">
                   <span>Knowledge Usage</span>
                   <span className="text-cyan">68%</span>
                 </div>
                 <div className="h-1.5 overflow-hidden rounded-full bg-white/10">
                   <div className="h-full w-[68%] rounded-full bg-gradient-to-r from-cyan to-violet" />
                 </div>
-                <p className="mt-1.5 font-mono text-[10px] text-ink-dim">
+                <p className="mt-1.5 font-mono text-xs text-ink-dim">
                   1,248 nodes · 4,320 connections
                 </p>
               </div>
@@ -145,7 +148,7 @@ export function CommandShell({ children }: { children: React.ReactNode }) {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex flex-1 flex-col items-center gap-1 py-2 text-[9px] uppercase tracking-wider",
+                "flex flex-1 flex-col items-center gap-1 py-2 text-xs uppercase tracking-wider",
                 active ? "text-cyan" : "text-ink-dim",
               )}
             >

@@ -3,6 +3,7 @@ import {
   FlaskConical,
   Split,
   Blend,
+  Compass,
   Crosshair,
   Archive,
   type LucideIcon,
@@ -46,6 +47,13 @@ export const NAV_ITEMS: NavItem[] = [
     description: "Independent evaluation",
   },
   {
+    href: "/discover",
+    label: "Discover",
+    short: "Discover",
+    icon: Compass,
+    description: "Explore knowledge spaces",
+  },
+  {
     href: "/mission",
     label: "Mission Control",
     short: "Mission",
@@ -54,9 +62,9 @@ export const NAV_ITEMS: NavItem[] = [
   },
   {
     href: "/vault",
-    label: "Memory Vault",
-    short: "Vault",
+    label: "Memory Matrix",
+    short: "Matrix",
     icon: Archive,
-    description: "Documents & memory",
+    description: "Immersive second brain",
   },
 ];

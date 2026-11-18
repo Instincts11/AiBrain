@@ -99,7 +99,7 @@ export function DualView() {
             reliable answer.
           </p>
           <div className="mt-2 flex flex-wrap items-center gap-2 text-xs">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald/30 bg-emerald/10 px-2 py-0.5 text-[10px] uppercase tracking-wider text-emerald">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald/30 bg-emerald/10 px-2 py-0.5 text-xs uppercase tracking-wider text-emerald">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald" />
               Live Analysis
             </span>
@@ -167,7 +167,7 @@ export function DualView() {
               <div className="flex h-24 w-24 items-center justify-center rounded-full border border-cyan/30 bg-gradient-to-br from-cyan/20 via-violet/25 to-violet/10 shadow-[0_0_36px_rgba(139,92,246,0.25)]">
                 <InfinityIcon className="h-9 w-9 text-ink" />
               </div>
-              <div className="mt-2 text-[10px] uppercase tracking-wider text-ink-dim">
+              <div className="mt-2 text-xs uppercase tracking-wider text-ink-dim">
                 Dual Analysis
               </div>
             </div>
@@ -206,7 +206,7 @@ export function DualView() {
 
           <div className="grid gap-3 xl:grid-cols-[1.1fr_1fr]">
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-              <div className="mb-3 text-[11px] uppercase tracking-wider text-ink-dim">
+              <div className="mb-3 text-sm uppercase tracking-wider text-ink-dim">
                 Argument Exchange
               </div>
               <div className="space-y-3">
@@ -227,7 +227,7 @@ export function DualView() {
                           : "border-violet/20 bg-violet/[0.06]",
                       )}
                     >
-                      <div className="mb-1 font-mono text-[10px] text-ink-dim">
+                      <div className="mb-1 font-mono text-xs text-ink-dim">
                         {a.agent === "jarvis" ? "JARVIS" : "ULTRON"} · {a.time}
                       </div>
                       {a.text}
@@ -238,12 +238,12 @@ export function DualView() {
             </div>
 
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-4">
-              <div className="mb-3 text-[11px] uppercase tracking-wider text-ink-dim">
+              <div className="mb-3 text-sm uppercase tracking-wider text-ink-dim">
                 Key Claims Comparison
               </div>
               <div className="overflow-x-auto">
                 <table className="w-full min-w-[420px] text-left text-xs">
-                  <thead className="text-[10px] uppercase tracking-wider text-ink-dim">
+                  <thead className="text-xs uppercase tracking-wider text-ink-dim">
                     <tr className="border-b border-white/10">
                       <th className="pb-2 pr-2 font-medium">Claim</th>
                       <th className="pb-2 pr-2 font-medium text-cyan">JARVIS</th>
@@ -272,7 +272,7 @@ export function DualView() {
                 </table>
               </div>
               <div className="mt-4">
-                <div className="mb-2 text-[11px] uppercase tracking-wider text-ink-dim">
+                <div className="mb-2 text-sm uppercase tracking-wider text-ink-dim">
                   Evidence & Sources
                 </div>
                 <div className="flex flex-wrap gap-2">
@@ -283,7 +283,7 @@ export function DualView() {
                   ].map((f) => (
                     <span
                       key={f}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 px-2 py-1 text-[11px] text-ink-muted"
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 px-2 py-1 text-sm text-ink-muted"
                     >
                       <FileText className="h-3 w-3 text-cyan" />
                       {f}
@@ -309,7 +309,7 @@ export function DualView() {
                   className="rounded-xl border border-white/10 bg-black/20 px-2 py-2"
                 >
                   <div className="text-lg font-semibold text-ink">{n}</div>
-                  <div className="text-[10px] text-ink-dim">{l}</div>
+                  <div className="text-xs text-ink-dim">{l}</div>
                 </div>
               ))}
             </div>
@@ -352,7 +352,7 @@ export function DualView() {
           </Panel>
 
           <div className="mt-auto rounded-2xl border border-violet/30 bg-gradient-to-br from-cyan/10 via-violet/15 to-violet/10 p-4">
-            <div className="mb-1 text-[11px] uppercase tracking-wider text-ink-dim">
+            <div className="mb-1 text-sm uppercase tracking-wider text-ink-dim">
               Next: Synthesis
             </div>
             <p className="mb-3 text-xs text-ink-muted">
@@ -382,7 +382,7 @@ function Panel({
 }) {
   return (
     <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-3.5">
-      <div className="mb-2.5 text-[11px] uppercase tracking-wider text-ink-dim">
+      <div className="mb-2.5 text-sm uppercase tracking-wider text-ink-dim">
         {title}
       </div>
       {children}
@@ -424,7 +424,7 @@ function MindPanel({
               Confidence {confidence.toFixed(2)}
             </Badge>
           </div>
-          <div className="text-[11px] text-ink-dim">{role}</div>
+          <div className="text-sm text-ink-dim">{role}</div>
         </div>
       </div>
       <div className="mb-2 text-xs font-medium text-ink">{title}</div>

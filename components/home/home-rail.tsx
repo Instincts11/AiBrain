@@ -19,7 +19,7 @@ const RAIL = [
   { href: "/lab", icon: FlaskConical, label: "Lab" },
   { href: "/dual", icon: Activity, label: "Dual" },
   { href: "/mission", icon: Crosshair, label: "Mission" },
-  { href: "/vault", icon: Archive, label: "Vault" },
+  { href: "/vault", icon: Archive, label: "Matrix" },
   { href: "/synthesis", icon: Settings, label: "Synthesis" },
 ];
 

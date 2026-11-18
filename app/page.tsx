@@ -27,10 +27,9 @@ export default function HomePage() {
         <section className="relative overflow-x-hidden pb-14 pt-10 md:pt-14">
           <SectionBg
             src="/home/hero-bg.jpg"
-            overlay="from-[#05070f]/75 via-[#05070f]/50 to-[#05070f]/90"
+            overlay="from-[#05070f]/70 via-[#05070f]/55 to-[#05070f]/85"
           />
 
-          {/* Restored centered hero shell */}
           <div className="relative mx-auto w-full max-w-[1400px] px-4 md:px-8 md:pl-20 lg:px-10">
             <motion.div
               initial={{ opacity: 0, y: 18 }}
