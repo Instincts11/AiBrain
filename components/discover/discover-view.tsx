@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -19,7 +19,9 @@ import {
   Wrench,
   type LucideIcon,
 } from "lucide-react";
+import { PageBackButton } from "@/components/shell/page-back-button";
 import { cn } from "@/lib/utils";
+import { useNavMemoryStore } from "@/stores/nav-memory-store";
 
 type Goal =
   | "Build a Product"
@@ -177,10 +179,23 @@ const INTERESTS = [
   },
 ];
 
+type DiscoverSnap = {
+  query: string;
+  goal: Goal | null;
+  chip: string | null;
+};
+
 export function DiscoverView() {
-  const [query, setQuery] = useState("");
-  const [goal, setGoal] = useState<Goal | null>(null);
-  const [chip, setChip] = useState<string | null>(null);
+  const saveSnapshot = useNavMemoryStore((s) => s.saveSnapshot);
+  const getSnapshot = useNavMemoryStore((s) => s.getSnapshot);
+  const restored = getSnapshot<DiscoverSnap>("/discover");
+  const [query, setQuery] = useState(restored?.query ?? "");
+  const [goal, setGoal] = useState<Goal | null>(restored?.goal ?? null);
+  const [chip, setChip] = useState<string | null>(restored?.chip ?? null);
+
+  useEffect(() => {
+    saveSnapshot("/discover", { query, goal, chip });
+  }, [query, goal, chip, saveSnapshot]);
 
   const needle = (chip ?? query).trim().toLowerCase();
 
@@ -222,6 +237,9 @@ export function DiscoverView() {
           priority
         />
         <div className="absolute inset-0 bg-gradient-to-b from-[#05070f]/40 via-[#05070f]/55 to-[#05070f]" />
+        <div className="relative mb-4">
+          <PageBackButton />
+        </div>
         <div className="relative mx-auto max-w-4xl text-center">
           <p className="font-mono text-xs uppercase tracking-[0.28em] text-cyan">
             Discover
@@ -519,30 +537,70 @@ export function DiscoverView() {
         </section>
       </div>
 
-      <section className="relative overflow-hidden border-t border-white/5 px-4 py-12 md:px-8">
+      <section className="relative overflow-hidden border-t border-white/5 px-4 py-16 md:px-8 md:py-24">
         <Image
-          src="/home/visual-earth.png"
+          src="/home/Neon Galaxy Over Earth’s Horizon.png"
           alt=""
           fill
-          className="object-cover object-bottom opacity-40"
+          className="object-cover object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-[#05070f]/70" />
-        <div className="relative mx-auto flex max-w-4xl flex-col items-center text-center">
+        <div className="absolute inset-0 bg-[#05070f]/55" />
+        <div className="relative mx-auto flex w-full max-w-5xl flex-col items-center text-center">
           <InfinityIcon className="h-8 w-8 text-cyan" />
-          <h2 className="mt-3 text-2xl font-semibold text-ink md:text-3xl">
-            Keep Exploring. Keep Connecting.
+          <h2 className="mt-4 text-3xl font-semibold tracking-tight text-ink md:text-5xl">
+            Keep Exploring. Keep{" "}
+            <span className="bg-gradient-to-r from-violet to-fuchsia-400 bg-clip-text text-transparent">
+              Connecting.
+            </span>
           </h2>
-          <p className="mt-2 text-sm text-ink-muted md:text-base">
-            Your knowledge universe grows with every discovery.
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-ink-muted md:text-lg">
+            Every search, trail, and collection adds another link to your
+            knowledge universe. Follow what is trending, open a space that
+            matches your goal, and turn scattered discoveries into a living
+            graph you can return to.
           </p>
-          <Link
-            href="/nexus"
-            className="mt-5 inline-flex h-11 items-center gap-2 rounded-full bg-gradient-to-r from-cyan via-violet to-fuchsia-500 px-6 text-sm font-medium text-white"
-          >
-            Explore More
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+          <div className="mt-8 grid w-full gap-3 sm:grid-cols-3">
+            {[
+              {
+                title: "Follow a trail",
+                body: "Move from a concept to a working practice in a few guided modules.",
+              },
+              {
+                title: "Open a space",
+                body: "Step into a domain hub of papers, tools, and real-world applications.",
+              },
+              {
+                title: "Grow the graph",
+                body: "Save what matters so the next discovery starts from what you already know.",
+              },
+            ].map((item) => (
+              <div
+                key={item.title}
+                className="rounded-2xl border border-white/15 bg-[#05070f]/55 px-4 py-4 text-left backdrop-blur-sm"
+              >
+                <h3 className="text-base font-medium text-ink">{item.title}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-ink-muted">
+                  {item.body}
+                </p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/nexus"
+              className="inline-flex h-12 items-center gap-2 rounded-full bg-gradient-to-r from-cyan via-violet to-fuchsia-500 px-7 text-base font-medium text-white shadow-[0_0_28px_rgba(139,92,246,0.35)]"
+            >
+              Explore More
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href="/vault"
+              className="inline-flex h-12 items-center gap-2 rounded-full border border-white/20 bg-black/40 px-6 text-base text-ink backdrop-blur hover:text-white"
+            >
+              Open Memory Matrix
+            </Link>
+          </div>
         </div>
       </section>
     </div>

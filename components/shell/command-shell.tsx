@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
@@ -9,38 +10,50 @@ import { cn } from "@/lib/utils";
 import { useUiStore } from "@/stores/ui-store";
 import { Button } from "@/components/ui/button";
 import { ChatDock } from "./chat-dock";
+import { NavMemoryTracker } from "./nav-memory-tracker";
 
 export function CommandShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const { railCollapsed, toggleRail } = useUiStore();
+  const [embed, setEmbed] = useState(false);
   const isMarketing =
     pathname === "/" ||
     pathname === "/use-cases" ||
-    pathname.startsWith("/use-cases/");
+    pathname.startsWith("/use-cases/") ||
+    pathname === "/pricing" ||
+    pathname.startsWith("/pricing/");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setEmbed(params.get("embed") === "1");
+  }, [pathname]);
 
   if (isMarketing) {
     return <>{children}</>;
   }
 
+  const collapsed = embed || railCollapsed;
+
   return (
     <div className="app-chrome flex h-dvh flex-col overflow-hidden dm-grid-bg">
+      <NavMemoryTracker />
       <div className="flex min-h-0 flex-1">
         <aside
           className={cn(
             "hidden shrink-0 flex-col border-r border-border bg-[#070b14]/95 transition-[width] duration-300 md:flex",
-            railCollapsed ? "w-[68px]" : "w-[220px]",
+            collapsed ? "w-[68px]" : "w-[220px]",
           )}
         >
           <div
             className={cn(
               "flex h-14 shrink-0 items-center gap-2 border-b border-border px-3",
-              railCollapsed && "justify-center px-0",
+              collapsed && "justify-center px-0",
             )}
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-cyan/30 to-violet/40 text-cyan">
               <InfinityIcon className="h-4 w-4" />
             </div>
-            {!railCollapsed && (
+            {!collapsed && (
               <Link href="/" className="text-sm font-semibold tracking-[0.16em] text-ink">
                 DUALMIND
               </Link>
@@ -48,25 +61,27 @@ export function CommandShell({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="flex items-center justify-end border-b border-border px-2 py-1.5 md:hidden" />
-          <div
-            className={cn(
-              "hidden items-center border-b border-border px-2 py-1.5 md:flex",
-              railCollapsed ? "justify-center" : "justify-end",
-            )}
-          >
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleRail}
-              aria-label={railCollapsed ? "Expand navigation" : "Collapse navigation"}
-            >
-              {railCollapsed ? (
-                <PanelLeft className="h-4 w-4" />
-              ) : (
-                <PanelLeftClose className="h-4 w-4" />
+          {!embed && (
+            <div
+              className={cn(
+                "hidden items-center border-b border-border px-2 py-1.5 md:flex",
+                collapsed ? "justify-center" : "justify-end",
               )}
-            </Button>
-          </div>
+            >
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={toggleRail}
+                aria-label={collapsed ? "Expand navigation" : "Collapse navigation"}
+              >
+                {collapsed ? (
+                  <PanelLeft className="h-4 w-4" />
+                ) : (
+                  <PanelLeftClose className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
+          )}
 
           <nav className="flex flex-1 flex-col gap-1 p-2">
             {NAV_ITEMS.map((item) => {
@@ -82,7 +97,7 @@ export function CommandShell({ children }: { children: React.ReactNode }) {
                     active
                       ? "text-ink"
                       : "text-ink-muted hover:bg-white/[0.03] hover:text-ink",
-                    railCollapsed && "justify-center px-0",
+                    collapsed && "justify-center px-0",
                   )}
                   title={item.label}
                 >
@@ -99,7 +114,7 @@ export function CommandShell({ children }: { children: React.ReactNode }) {
                       active ? "text-cyan" : "text-ink-dim",
                     )}
                   />
-                  {!railCollapsed && (
+                  {!collapsed && (
                     <span className="relative z-10 truncate">{item.label}</span>
                   )}
                 </Link>
@@ -107,7 +122,7 @@ export function CommandShell({ children }: { children: React.ReactNode }) {
             })}
           </nav>
 
-          {!railCollapsed && (
+          {!collapsed && (
             <div className="space-y-3 border-t border-border p-3">
               <div>
                 <div className="mb-1.5 text-xs uppercase tracking-wider text-ink-dim">
@@ -133,33 +148,40 @@ export function CommandShell({ children }: { children: React.ReactNode }) {
           )}
         </aside>
 
-        <main className="relative min-w-0 flex-1 overflow-hidden pb-[140px] md:pb-[88px]">
+        <main
+          className={cn(
+            "relative min-w-0 flex-1 overflow-hidden",
+            embed ? "pb-0" : "pb-[140px] md:pb-[88px]",
+          )}
+        >
           {children}
         </main>
       </div>
 
-      <nav className="z-50 flex shrink-0 items-stretch justify-around border-t border-border bg-midnight/95 backdrop-blur-md md:hidden">
-        {NAV_ITEMS.map((item) => {
-          const active =
-            pathname === item.href || pathname.startsWith(`${item.href}/`);
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={cn(
-                "flex flex-1 flex-col items-center gap-1 py-2 text-xs uppercase tracking-wider",
-                active ? "text-cyan" : "text-ink-dim",
-              )}
-            >
-              <Icon className="h-4 w-4" />
-              {item.short}
-            </Link>
-          );
-        })}
-      </nav>
+      {!embed && (
+        <nav className="z-50 flex shrink-0 items-stretch justify-around border-t border-border bg-midnight/95 backdrop-blur-md md:hidden">
+          {NAV_ITEMS.map((item) => {
+            const active =
+              pathname === item.href || pathname.startsWith(`${item.href}/`);
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  "flex flex-1 flex-col items-center gap-1 py-2 text-xs uppercase tracking-wider",
+                  active ? "text-cyan" : "text-ink-dim",
+                )}
+              >
+                <Icon className="h-4 w-4" />
+                {item.short}
+              </Link>
+            );
+          })}
+        </nav>
+      )}
 
-      <ChatDock />
+      {!embed && <ChatDock />}
     </div>
   );
 }

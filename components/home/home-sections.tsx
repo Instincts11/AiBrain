@@ -24,6 +24,7 @@ import {
   Activity,
 } from "lucide-react";
 import { HOME_SHELL } from "@/lib/home-layout";
+import { ProductWalkthrough } from "@/components/home/product-walkthrough";
 
 /** Solid dark section shell — no text-baked background plates. */
 function DarkSection({
@@ -285,7 +286,7 @@ export function KnowledgeUniverse() {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden bg-[#050a14] py-16 md:py-24"
+      className="relative overflow-hidden bg-[#050a14] py-12 md:py-16"
     >
       <motion.div
         style={{ y: bgY }}
@@ -305,49 +306,55 @@ export function KnowledgeUniverse() {
         style={{ y: contentY }}
         className="relative mx-auto w-full max-w-[1680px] px-4 sm:px-6 md:pl-20 md:pr-8 lg:px-8 xl:px-10"
       >
-        <div className="mx-auto max-w-3xl py-6 text-center lg:mx-0 lg:max-w-2xl lg:pl-10 lg:text-left xl:pl-16">
-          <p className="font-mono text-[13px] uppercase tracking-[0.28em] text-ink md:text-sm">
-            The AI Decision Intelligence Platform
-          </p>
-          <h2 className="mt-3 text-5xl font-semibold leading-[1.05] tracking-tight text-ink md:text-6xl xl:text-[4.5rem]">
-            A Living Network of{" "}
-            <span className="bg-gradient-to-r from-cyan via-violet to-fuchsia-400 bg-clip-text text-transparent">
-              Your Knowledge
-            </span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg leading-relaxed text-ink-muted lg:mx-0 md:text-xl">
-            Ingest your information, map the connections, challenge it with two
-            independent AI minds, and turn it into clear, evidence-backed
-            decisions and execution plans.
-          </p>
+        <div className="grid items-center gap-3 py-4 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-4 xl:gap-5">
+          <div className="mx-auto max-w-xl text-center lg:mx-0 lg:ml-8 lg:max-w-lg lg:pl-6 lg:text-left xl:ml-12 xl:pl-10">
+            <p className="font-mono text-[11px] uppercase tracking-[0.24em] text-ink md:text-xs">
+              The AI Decision Intelligence Platform
+            </p>
+            <h2 className="mt-2 text-3xl font-semibold leading-[1.1] tracking-tight text-ink md:text-4xl xl:text-5xl">
+              A Living Network of{" "}
+              <span className="bg-gradient-to-r from-cyan via-violet to-fuchsia-400 bg-clip-text text-transparent">
+                Your Knowledge
+              </span>
+            </h2>
+            <p className="mx-auto mt-2.5 max-w-lg text-sm leading-relaxed text-ink-muted lg:mx-0 md:text-base">
+              Ingest your information, map the connections, challenge it with two
+              independent AI minds, and turn it into clear, evidence-backed
+              decisions and execution plans.
+            </p>
 
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {features.map((f) => {
-              const Icon = f.icon;
-              return (
-                <div key={f.label} className="text-center lg:text-left">
-                  <Icon className={`mx-auto mb-1.5 h-5 w-5 lg:mx-0 ${f.color}`} />
-                  <div className="text-[12px] font-medium text-ink">{f.label}</div>
-                </div>
-              );
-            })}
+            <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+              {features.map((f) => {
+                const Icon = f.icon;
+                return (
+                  <div key={f.label} className="text-center lg:text-left">
+                    <Icon className={`mx-auto mb-1 h-4 w-4 lg:mx-0 ${f.color}`} />
+                    <div className="text-[11px] font-medium text-ink">{f.label}</div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-2.5 lg:justify-start">
+              <Link
+                href="/nexus"
+                className="inline-flex h-10 items-center gap-2 rounded-full bg-gradient-to-r from-cyan via-violet to-fuchsia-500 px-5 text-sm font-medium text-white shadow-[0_0_28px_rgba(139,92,246,0.35)]"
+              >
+                Enter the Nexus
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <a
+                href="#how"
+                className="inline-flex h-10 items-center gap-2 rounded-full border border-white/20 bg-black/30 px-5 text-sm text-ink-muted backdrop-blur transition-colors hover:border-white/30 hover:text-ink"
+              >
+                <Play className="h-4 w-4" />
+                Watch Overview
+              </a>
+            </div>
           </div>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
-            <Link
-              href="/nexus"
-              className="inline-flex h-12 items-center gap-2 rounded-full bg-gradient-to-r from-cyan via-violet to-fuchsia-500 px-7 text-sm font-medium text-white shadow-[0_0_28px_rgba(139,92,246,0.35)]"
-            >
-              Enter the Nexus
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            <a
-              href="#how"
-              className="inline-flex h-12 items-center gap-2 rounded-full border border-white/20 bg-black/30 px-6 text-sm text-ink-muted backdrop-blur transition-colors hover:border-white/30 hover:text-ink"
-            >
-              <Play className="h-4 w-4" />
-              Watch Overview
-            </a>
+          <div className="w-full min-w-0">
+            <ProductWalkthrough />
           </div>
         </div>
       </motion.div>

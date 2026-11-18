@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { DualmindLogo } from "./logo";
@@ -13,11 +14,18 @@ const LINKS = [
   { label: "Use Cases", href: "/use-cases" },
   { label: "Discover", href: "/discover" },
   { label: "Research", href: "/vault" },
-  { label: "Pricing", href: "/#why" },
+  { label: "Pricing", href: "/pricing" },
 ];
 
 export function HomeNav() {
   const pathname = usePathname();
+  const [embed, setEmbed] = useState(false);
+
+  useEffect(() => {
+    setEmbed(new URLSearchParams(window.location.search).get("embed") === "1");
+  }, [pathname]);
+
+  if (embed) return null;
 
   return (
     <header className="sticky top-0 z-40 border-b border-white/5 bg-[#05070f]/65 backdrop-blur-xl">
@@ -26,7 +34,7 @@ export function HomeNav() {
           <DualmindLogo />
         </Link>
         <nav className="hidden items-center gap-6 lg:flex">
-          {LINKS.map((link) => {
+          {LINKS.map((link) => {   
             const pathOnly = link.href.split("#")[0] || "/";
             const active =
               pathOnly === "/"

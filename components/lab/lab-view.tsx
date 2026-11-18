@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
   FlaskConical,
@@ -16,7 +16,9 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { AgentAvatar } from "@/components/shell/agent-avatar";
+import { PageBackButton } from "@/components/shell/page-back-button";
 import { cn } from "@/lib/utils";
+import { useNavMemoryStore } from "@/stores/nav-memory-store";
 
 const STEPS = [
   "Define",
@@ -36,10 +38,27 @@ const FILES = [
   "Go-to-market draft.md",
 ];
 
+type LabSnap = {
+  jarvisFocus: string[];
+  ultronFocus: string[];
+  depth: string;
+};
+
 export function LabView() {
-  const [jarvisFocus, setJarvisFocus] = useState(["Strategy", "Opportunities"]);
-  const [ultronFocus, setUltronFocus] = useState(["Risks", "Assumptions"]);
-  const [depth, setDepth] = useState("Standard");
+  const saveSnapshot = useNavMemoryStore((s) => s.saveSnapshot);
+  const getSnapshot = useNavMemoryStore((s) => s.getSnapshot);
+  const restored = getSnapshot<LabSnap>("/lab");
+  const [jarvisFocus, setJarvisFocus] = useState(
+    restored?.jarvisFocus ?? ["Strategy", "Opportunities"],
+  );
+  const [ultronFocus, setUltronFocus] = useState(
+    restored?.ultronFocus ?? ["Risks", "Assumptions"],
+  );
+  const [depth, setDepth] = useState(restored?.depth ?? "Standard");
+
+  useEffect(() => {
+    saveSnapshot("/lab", { jarvisFocus, ultronFocus, depth });
+  }, [jarvisFocus, ultronFocus, depth, saveSnapshot]);
 
   function toggle(list: string[], value: string, set: (v: string[]) => void) {
     set(
@@ -53,6 +72,9 @@ export function LabView() {
     <div className="dm-scrollbar flex h-full min-h-0 flex-col overflow-auto">
       <div className="flex shrink-0 flex-wrap items-start justify-between gap-4 border-b border-border px-4 py-4 md:px-6">
         <div>
+          <div className="mb-2">
+            <PageBackButton />
+          </div>
           <div className="mb-1 flex items-center gap-2">
             <FlaskConical className="h-5 w-5 text-cyan" />
             <h1 className="text-xl font-semibold tracking-tight text-ink md:text-2xl">

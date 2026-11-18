@@ -14,7 +14,7 @@ function NeuralCore() {
     const pts: THREE.Vector3[] = [];
     const count = 48;
     for (let i = 0; i < count; i++) {
-      const phi = Math.acos(-1 + (2 * i) / count);
+      const phi = Math.acos(-1 + (2 * i) / count); 
       const theta = Math.PI * (1 + Math.sqrt(5)) * i;
       const r = 1.15 + (i % 3) * 0.08;
       pts.push(

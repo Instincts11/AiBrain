@@ -14,9 +14,11 @@ import {
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { AgentAvatar } from "@/components/shell/agent-avatar";
+import { PageBackButton } from "@/components/shell/page-back-button";
 import { cn } from "@/lib/utils";
 import { NexusToolbar } from "./nexus-toolbar";
 import { useNexusStore } from "@/stores/nexus-store";
+import { useNavMemoryStore } from "@/stores/nav-memory-store";
 
 const NexusCanvas = dynamic(
   () => import("./nexus-canvas").then((m) => m.NexusCanvas),
@@ -47,21 +49,35 @@ const COMMUNITIES = [
   { name: "Resources", pct: 16, color: "#f59e0b" },
 ];
 
+type NexusSnap = { tab: (typeof TABS)[number] };
+
 export function NexusView() {
   const init = useNexusStore((s) => s.init);
   const ready = useNexusStore((s) => s.ready);
   const initError = useNexusStore((s) => s.initError);
-  const [tab, setTab] = useState<(typeof TABS)[number]>("Knowledge Graph");
+  const saveSnapshot = useNavMemoryStore((s) => s.saveSnapshot);
+  const getSnapshot = useNavMemoryStore((s) => s.getSnapshot);
+  const restored = getSnapshot<NexusSnap>("/nexus");
+  const [tab, setTab] = useState<(typeof TABS)[number]>(
+    restored?.tab && TABS.includes(restored.tab) ? restored.tab : "Knowledge Graph",
+  );
 
   useEffect(() => {
     init();
   }, [init]);
+
+  useEffect(() => {
+    saveSnapshot("/nexus", { tab });
+  }, [tab, saveSnapshot]);
 
   return (
     <div className="dm-scrollbar flex h-full min-h-0 flex-col overflow-auto">
       {/* Header */}
       <div className="flex shrink-0 flex-wrap items-start justify-between gap-4 border-b border-border px-4 py-4 md:px-6">
         <div>
+          <div className="mb-2">
+            <PageBackButton />
+          </div>
           <div className="flex items-center gap-2.5">
             <h1 className="text-xl font-semibold tracking-tight text-ink md:text-2xl">
               The Nexus
