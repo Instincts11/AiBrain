@@ -82,12 +82,12 @@ function AgentPanel({
       transition={{ delay: accent === "cyan" ? 0.15 : 0.25 }}
       className={`flex flex-col justify-center rounded-2xl border p-4 backdrop-blur-md md:p-5 ${styles}`}
     >
-      <div className={`text-sm font-semibold tracking-wide ${title}`}>{name}</div>
-      <div className="mt-0.5 text-[11px] text-ink-muted">{role}</div>
+      <div className={`text-base font-semibold tracking-wide ${title}`}>{name}</div>
+      <div className="mt-0.5 text-xs text-ink-muted md:text-sm">{role}</div>
       <ul className="mt-3 space-y-2">
         {points.map((p) => (
-          <li key={p} className="flex items-start gap-2 text-[12px] text-ink-muted">
-            <Check className={`mt-0.5 h-3.5 w-3.5 shrink-0 ${icon}`} />
+          <li key={p} className="flex items-start gap-2 text-sm text-ink-muted">
+            <Check className={`mt-0.5 h-4 w-4 shrink-0 ${icon}`} />
             <span>{p}</span>
           </li>
         ))}

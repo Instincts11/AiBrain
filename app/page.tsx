@@ -11,6 +11,7 @@ import {
   FeatureStrip,
   HowItWorks,
   UseCases,
+  DiscoverShowcase,
   KnowledgeUniverse,
   WhyDualmind,
   HomeFooter,
@@ -37,16 +38,16 @@ export default function HomePage() {
               transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
               className="mx-auto max-w-4xl text-center"
             >
-              <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-cyan">
+              <p className="font-mono text-xs uppercase tracking-[0.28em] text-cyan md:text-sm">
                 The AI Decision Intelligence Platform
               </p>
-              <h1 className="mt-4 text-4xl font-semibold leading-[1.08] tracking-tight text-ink sm:text-5xl md:text-6xl">
+              <h1 className="mt-4 text-5xl font-semibold leading-[1.08] tracking-tight text-ink sm:text-6xl md:text-7xl">
                 Two Minds. One{" "}
                 <span className="bg-gradient-to-r from-violet via-fuchsia-400 to-pink-400 bg-clip-text text-transparent">
                   Superior Decision.
                 </span>
               </h1>
-              <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-ink-muted md:text-base">
+              <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-ink-muted md:text-lg">
                 Transform your information, ideas and goals into an
                 interconnected intelligence network. Compare perspectives,
                 challenge assumptions and get evidence-backed decisions with a
@@ -64,14 +65,14 @@ export default function HomePage() {
             >
               <Link
                 href="/nexus"
-                className="inline-flex h-12 items-center gap-2 rounded-full bg-gradient-to-r from-cyan via-sky-400 to-violet px-7 text-sm font-medium text-[#041018] shadow-[0_0_28px_rgba(34,211,238,0.35)]"
+                className="inline-flex h-12 items-center gap-2 rounded-full bg-gradient-to-r from-cyan via-sky-400 to-violet px-7 text-base font-medium text-[#041018] shadow-[0_0_28px_rgba(34,211,238,0.35)]"
               >
                 Enter the Nexus
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <a
                 href="#how"
-                className="inline-flex h-12 items-center gap-2 rounded-full border border-white/15 bg-black/45 px-6 text-sm text-ink-muted backdrop-blur transition-colors hover:border-white/25 hover:text-ink"
+                className="inline-flex h-12 items-center gap-2 rounded-full border border-white/15 bg-black/45 px-6 text-base text-ink-muted backdrop-blur transition-colors hover:border-white/25 hover:text-ink"
               >
                 <Play className="h-4 w-4" />
                 Watch Product Tour
@@ -83,6 +84,7 @@ export default function HomePage() {
         <FeatureStrip />
         <HowItWorks />
         <UseCases />
+        <DiscoverShowcase />
         <KnowledgeUniverse />
         <WhyDualmind />
         <HomeFooter />

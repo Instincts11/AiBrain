@@ -9,8 +9,8 @@ const LINKS = [
   { label: "Product", href: "/nexus" },
   { label: "Solutions", href: "/lab" },
   { label: "Use Cases", href: "#use-cases" },
+  { label: "Discover", href: "#discover" },
   { label: "Research", href: "/vault" },
-  { label: "Resources", href: "/vault" },
   { label: "Pricing", href: "#why" },
 ];
 
@@ -26,7 +26,7 @@ export function HomeNav() {
             <Link
               key={link.label}
               href={link.href}
-              className="text-[13px] text-ink-muted transition-colors hover:text-ink"
+              className="text-sm text-ink-muted transition-colors hover:text-ink"
             >
               {link.label}
             </Link>
@@ -35,13 +35,13 @@ export function HomeNav() {
         <div className="flex items-center gap-2">
           <Link
             href="/lab"
-            className="hidden h-9 items-center rounded-full px-4 text-[13px] text-ink-muted transition-colors hover:text-ink sm:inline-flex"
+            className="hidden h-9 items-center rounded-full px-4 text-sm text-ink-muted transition-colors hover:text-ink sm:inline-flex"
           >
             Sign In
           </Link>
           <Link
             href="/nexus"
-            className="inline-flex h-9 items-center gap-1.5 rounded-full bg-gradient-to-r from-cyan via-violet to-fuchsia-500 px-4 text-[13px] font-medium text-white shadow-[0_0_24px_rgba(34,211,238,0.25)]"
+            className="inline-flex h-9 items-center gap-1.5 rounded-full bg-gradient-to-r from-cyan via-violet to-fuchsia-500 px-4 text-sm font-medium text-white shadow-[0_0_24px_rgba(34,211,238,0.25)]"
           >
             Get Started
             <span aria-hidden>→</span>
