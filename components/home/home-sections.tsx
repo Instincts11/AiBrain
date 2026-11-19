@@ -24,6 +24,7 @@ import {
   Activity,
 } from "lucide-react";
 import { HOME_SHELL } from "@/lib/home-layout";
+import { DualmindLogo } from "@/components/home/logo";
 import { ProductWalkthrough } from "@/components/home/product-walkthrough";
 
 /** Solid dark section shell — no text-baked background plates. */
@@ -578,18 +579,37 @@ export function WhyDualmind() {
   );
 }
 
+const FOOTER_LINKS = [
+  { href: "/nexus", label: "Nexus" },
+  { href: "/use-cases", label: "Use Cases" },
+  { href: "/discover", label: "Discover" },
+  { href: "/pricing", label: "Pricing" },
+];
+
 export function HomeFooter() {
   return (
-    <footer className="border-t border-white/5 bg-[#05070f] py-8">
-      <div
-        className={`flex flex-col items-center justify-between gap-3 text-center md:flex-row md:text-left ${HOME_SHELL}`}
-      >
-        <p className="text-sm text-ink-dim">
-          DUALMIND — Explore the connections. Challenge the thinking. Discover
-          the direction.
-        </p>
-        <p className="font-mono text-xs uppercase tracking-wider text-ink-dim">
-          Milestone 1–2 · Sample graph online
+    <footer className="border-t border-white/10 bg-[#05070f]">
+      <div className="h-px bg-gradient-to-r from-transparent via-cyan/50 to-violet/40" />
+      <div className={`${HOME_SHELL} flex flex-col gap-5 py-8 md:flex-row md:items-center md:justify-between`}>
+        <div>
+          <DualmindLogo />
+          <p className="mt-2 text-sm text-ink-muted">
+            Explore the connections. Challenge the thinking.
+          </p>
+        </div>
+        <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Footer">
+          {FOOTER_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="text-sm text-ink-muted transition-colors hover:text-ink"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </nav>
+        <p className="font-mono text-xs uppercase tracking-[0.18em] text-ink-dim">
+          © 2026 Dualmind
         </p>
       </div>
     </footer>

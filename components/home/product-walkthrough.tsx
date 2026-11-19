@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Pause, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { DualMindsPreview } from "@/components/home/dual-minds-preview";
 
 type ClickStep = {
   x: number;
@@ -14,8 +13,7 @@ type ClickStep = {
 type Scene = {
   title: string;
   caption: string;
-  path?: string;
-  mode?: "iframe" | "dual-minds";
+  path: string;
   steps: ClickStep[];
 };
 
@@ -24,7 +22,6 @@ const SCENES: Scene[] = [
     title: "Nexus",
     caption: "Explore the live knowledge graph and open node details",
     path: "/nexus?embed=1",
-    mode: "iframe",
     steps: [
       { x: 30, y: 42, label: "Select a knowledge node" },
       { x: 52, y: 36, label: "Follow related links" },
@@ -36,7 +33,6 @@ const SCENES: Scene[] = [
     title: "Intelligence Lab",
     caption: "Configure a real decision session with dual agents",
     path: "/lab?embed=1",
-    mode: "iframe",
     steps: [
       { x: 38, y: 28, label: "Define the decision" },
       { x: 70, y: 40, label: "Attach context" },
@@ -46,21 +42,9 @@ const SCENES: Scene[] = [
     ],
   },
   {
-    title: "Dual Analysis",
-    caption: "JARVIS and red ULTRON intelligences move side by side",
-    mode: "dual-minds",
-    steps: [
-      { x: 28, y: 48, label: "JARVIS constructive mind" },
-      { x: 72, y: 48, label: "ULTRON critical mind" },
-      { x: 50, y: 58, label: "Side-by-side dual pressure" },
-      { x: 72, y: 42, label: "Track red ULTRON motion" },
-    ],
-  },
-  {
     title: "Memory Matrix",
     caption: "Navigate the live Memory Matrix vault",
     path: "/vault?embed=1",
-    mode: "iframe",
     steps: [
       { x: 48, y: 44, label: "Focus a memory cluster" },
       { x: 62, y: 34, label: "Inspect linked memories" },
@@ -74,20 +58,39 @@ const STEP_MS = 2400;
 const SCENE_HOLD_MS = 1000;
 
 export function ProductWalkthrough() {
+  const rootRef = useRef<HTMLDivElement>(null);
   const [sceneIndex, setSceneIndex] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
-  const [playing, setPlaying] = useState(true);
+  const [userPlaying, setUserPlaying] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const [activated, setActivated] = useState(false);
   const [clicking, setClicking] = useState(false);
   const [ready, setReady] = useState(false);
   const [origin, setOrigin] = useState("");
   const sceneIndexRef = useRef(0);
   const stepIndexRef = useRef(0);
+  const playing = visible && userPlaying;
 
   const scene = SCENES[sceneIndex];
   const step = scene.steps[stepIndex] ?? scene.steps[0];
 
   useEffect(() => {
     setOrigin(window.location.origin);
+  }, []);
+
+  useEffect(() => {
+    const node = rootRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const onScreen = entry.isIntersecting && entry.intersectionRatio >= 0.35;
+        setVisible(onScreen);
+        if (onScreen) setActivated(true);
+      },
+      { threshold: [0, 0.35, 0.6] },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -98,23 +101,17 @@ export function ProductWalkthrough() {
     stepIndexRef.current = stepIndex;
   }, [stepIndex]);
 
-  const isDualMinds = scene.mode === "dual-minds";
-
   const src = useMemo(() => {
-    if (!origin || !scene.path) return "";
+    if (!activated || !origin || !scene.path) return "";
     return `${origin}${scene.path}`;
-  }, [origin, scene.path]);
+  }, [activated, origin, scene.path]);
 
   useEffect(() => {
     setReady(false);
-    if (isDualMinds) {
-      setReady(true);
-      return;
-    }
     if (!src) return;
     const timeout = window.setTimeout(() => setReady(true), 2200);
     return () => window.clearTimeout(timeout);
-  }, [src, isDualMinds]);
+  }, [src]);
 
   useEffect(() => {
     if (!playing || !ready) return;
@@ -154,7 +151,10 @@ export function ProductWalkthrough() {
   }, [playing, ready, sceneIndex, stepIndex]);
 
   return (
-    <div className="relative z-10 w-full overflow-hidden rounded-2xl border border-cyan/30 bg-[#05070f] shadow-[0_0_40px_rgba(34,211,238,0.18)]">
+    <div
+      ref={rootRef}
+      className="relative z-10 w-full overflow-hidden rounded-2xl border border-cyan/30 bg-[#05070f] shadow-[0_0_40px_rgba(34,211,238,0.18)]"
+    >
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
         <div>
           <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-cyan">
@@ -169,11 +169,11 @@ export function ProductWalkthrough() {
           </span>
           <button
             type="button"
-            onClick={() => setPlaying((v) => !v)}
+            onClick={() => setUserPlaying((v) => !v)}
             className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-ink hover:border-cyan/40 hover:text-cyan"
-            aria-label={playing ? "Pause walkthrough" : "Play walkthrough"}
+            aria-label={userPlaying ? "Pause walkthrough" : "Play walkthrough"}
           >
-            {playing ? (
+            {userPlaying ? (
               <Pause className="h-4 w-4" />
             ) : (
               <Play className="h-4 w-4" />
@@ -183,29 +183,27 @@ export function ProductWalkthrough() {
       </div>
 
       <div className="relative h-[320px] overflow-hidden bg-[#05070f] sm:h-[380px] lg:h-[420px]">
-        {!ready && (
+        {activated && !ready && (
           <div className="absolute inset-0 z-20 flex items-center justify-center bg-[#05070f] text-sm text-ink-muted">
             Loading {scene.title}…
           </div>
         )}
 
-        {isDualMinds ? (
-          <DualMindsPreview />
-        ) : (
-          src && (
-            <iframe
-              key={src}
-              src={src}
-              title={`${scene.title} live walkthrough`}
-              className="pointer-events-none absolute left-0 top-0 h-[200%] w-[200%] origin-top-left scale-50 border-0 bg-[#05070f]"
-              loading="eager"
-              onLoad={() => setReady(true)}
-            />
-          )
+        {src && (
+          <iframe
+            key={src}
+            src={src}
+            title={`${scene.title} live walkthrough`}
+            className="pointer-events-none absolute left-0 top-0 h-[200%] w-[200%] origin-top-left scale-50 border-0 bg-[#05070f]"
+            loading="lazy"
+            onLoad={() => setReady(true)}
+          />
         )}
 
         <div className="pointer-events-none absolute inset-0 z-10 bg-gradient-to-t from-[#05070f]/80 via-transparent to-[#05070f]/15" />
 
+        {playing && (
+        <>
         <div
           className="pointer-events-none absolute z-30 transition-all duration-700 ease-out"
           style={{
@@ -253,6 +251,8 @@ export function ProductWalkthrough() {
             {step.label}
           </div>
         </div>
+        </>
+        )}
 
         <div className="absolute inset-x-0 bottom-0 z-20 px-4 pb-3 pt-10">
           <p className="text-sm text-ink-muted">{scene.caption}</p>
